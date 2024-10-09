@@ -1,0 +1,29 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:7.6.2
+    container_name: es762
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - es-net
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+networks:
+  es-net:
+
+volumes:
+  esdata:
+    driver: local
